@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/signUpStr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_str"
+        android:textSize="80sp"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/signup_EDT_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_name_str"
+        android:layout_below="@id/signUpStr"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="15dp"
+        android:elevation="5dp"/>
+
+    <EditText
+        android:id="@+id/signup_EDT_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_str"
+        android:layout_below="@id/signup_EDT_username"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="15dp"
+        android:elevation="5dp"/>
+
+    <EditText
+        android:id="@+id/signup_EDT_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/avatar_str"
+        android:layout_below="@id/signup_EDT_email"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="15dp"
+        android:elevation="5dp"/>
+
+    <Button
+        android:id="@+id/signup_BTN_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_str"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/signup_EDT_avatar"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_background"
+        android:elevation="5dp"/>
+
+    <TextView
+        android:id="@+id/signup_LBL_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Hello World!"
+        android:layout_below="@id/signup_BTN_signup"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

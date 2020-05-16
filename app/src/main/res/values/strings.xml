@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Client</string>
+    <string name="login_str">Login</string>
+    <string name="email_str">Email</string>
+    <string name="sign_up_str">Sign Up</string>
+    <string name="user_name_str">User Name</string>
+    <string name="avatar_str">Avatar</string>
+    <string name="domain_str">Domain</string>
+    <string name="menu_search_garden">Search Garden</string>
+    <string name="menu_serach_facility">Search Facility</string>
+    <string name="menu_home">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_str">Welcome</string>
+</resources>
