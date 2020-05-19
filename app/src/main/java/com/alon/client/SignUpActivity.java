@@ -6,15 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.alon.client.utils.VolleySingleton;
+
+import com.alon.client.volley.VolleyHelper;
+import com.alon.client.volley.VolleyResultInterface;
+import com.alon.client.volley.VolleySingleton;
 import com.alon.client.utils.NewUserDetails;
 import com.alon.client.utils.UserRole;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,25 +95,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
                 volleyHelper.postObjectDataVolley(requestQueue, url, jsonBody);
-//                JsonObjectRequest jsonObjectRequestSignUp = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        signup_LBL_data.setText(response.toString());
-//                        signup_BTN_signup.setClickable(true);
-//                        finish();
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        signup_LBL_data.setText(error.toString());
-//                        signup_BTN_signup.setClickable(true);
-//                    }
-//                });
-//                jsonObjectRequestSignUp.setRetryPolicy(new DefaultRetryPolicy(
-//                        5000,
-//                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//                requestQueue.add(jsonObjectRequestSignUp);
                 break;
         }
     }

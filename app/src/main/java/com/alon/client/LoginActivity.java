@@ -7,11 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.alon.client.utils.VolleySingleton;
+
+import com.alon.client.utils.User;
+import com.alon.client.volley.VolleyHelper;
+import com.alon.client.volley.VolleyResultInterface;
+import com.alon.client.volley.VolleySingleton;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView login_LBL_data;
     private VolleyHelper volleyHelper;
     private VolleyResultInterface volleyResultInterface;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         requestQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         initVolleyInterface();
         volleyHelper = new VolleyHelper(volleyResultInterface);
+        user = User.getInstance();
     }
 
     private void initVolleyInterface() {
@@ -47,6 +54,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void notifySuccessObject(JSONObject response) {
                 login_LBL_data.setText(response.toString());
                 login_BTN_login.setClickable(true);
+                try {
+                    user.login(response.getJSONObject("userId").getString("email"), response.getString("username"), response.getString("avatar"), response.getString("role"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 startMainActivity();
             }
 

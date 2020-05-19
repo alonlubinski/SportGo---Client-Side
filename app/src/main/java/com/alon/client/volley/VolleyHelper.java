@@ -1,6 +1,4 @@
-package com.alon.client;
-
-import android.content.Context;
+package com.alon.client.volley;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;

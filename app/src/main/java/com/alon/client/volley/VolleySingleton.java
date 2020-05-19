@@ -1,4 +1,4 @@
-package com.alon.client.utils;
+package com.alon.client.volley;
 
 import android.content.Context;
 import android.graphics.Bitmap;
