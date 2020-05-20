@@ -6,6 +6,10 @@
         <item
             android:id="@+id/menu_home"
             android:title="@string/menu_home"/>
+
+        <item
+            android:id="@+id/menu_profile"
+            android:title="@string/profile_str"/>
         <item
             android:id="@+id/menu_search_garden"
             android:title="@string/menu_search_garden"/>

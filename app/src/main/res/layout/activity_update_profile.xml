@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_profile_str"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:textSize="40sp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/update_EDT_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_name_str"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:elevation="5dp"
+            android:layout_marginTop="30dp"/>
+
+        <EditText
+            android:id="@+id/update_EDT_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/avatar_str"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:elevation="5dp"
+            android:layout_marginTop="30dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/update_BTN_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/confirm_str"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"/>
+</RelativeLayout>

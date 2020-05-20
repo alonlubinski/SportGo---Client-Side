@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alon.client.fragments.HomeFragment;
+import com.alon.client.fragments.ProfileFragment;
 import com.alon.client.fragments.SearchFacilityFragment;
 import com.alon.client.fragments.SearchGardenFragment;
 import com.alon.client.utils.User;
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()){
             case R.id.menu_home:
                 fragment = new HomeFragment();
+                break;
+
+            case R.id.menu_profile:
+                fragment = new ProfileFragment();
                 break;
 
             case R.id.menu_search_garden:
