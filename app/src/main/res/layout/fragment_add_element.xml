@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AddElementFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_element_str"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/type_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/element_CBX_garden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/garden_str"/>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/element_CBX_facility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/facility_str"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/element_name_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"/>
+
+            <EditText
+                android:id="@+id/element_EDT_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/element_name_str"
+                android:background="@drawable/edit_text_background"
+                android:padding="15dp"
+                android:elevation="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/element_EDT_latitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/element_latitude_str"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:elevation="5dp"
+                    android:layout_marginRight="2dp"/>
+
+                <EditText
+                    android:id="@+id/element_EDT_longitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/element_longitude_str"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="2dp"/>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/element_BTN_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="@string/add_str"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:elevation="5dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

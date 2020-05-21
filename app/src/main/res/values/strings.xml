@@ -18,4 +18,13 @@
     <string name="role_str">Role</string>
     <string name="update_profile_str">Update Profile</string>
     <string name="confirm_str">Confirm</string>
+    <string name="add_element_str">Add Element</string>
+    <string name="add_str">Add</string>
+    <string name="type_str">Type</string>
+    <string name="garden_str">Garden</string>
+    <string name="facility_str">Facility</string>
+    <string name="element_name_str">Element Name</string>
+    <string name="location_str">Location</string>
+    <string name="element_latitude_str">Latitude</string>
+    <string name="element_longitude_str">Longitude</string>
 </resources>

@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alon.client.fragments.AddElementFragment;
 import com.alon.client.fragments.HomeFragment;
 import com.alon.client.fragments.ProfileFragment;
 import com.alon.client.fragments.SearchFacilityFragment;
 import com.alon.client.fragments.SearchGardenFragment;
 import com.alon.client.utils.User;
+import com.alon.client.utils.UserRole;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupDrawerContent(navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if(!user.getUserRole().equals(UserRole.MANAGER.toString())){
+            navigationView.getMenu().getItem(4).setVisible(false);
+        }
         getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new HomeFragment()).commit();
     }
 
@@ -103,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.menu_search_facility:
                 fragment = new SearchFacilityFragment();
+                break;
+
+            case R.id.menu_add_element:
+                fragment = new AddElementFragment();
                 break;
         }
         if(fragment != null){
