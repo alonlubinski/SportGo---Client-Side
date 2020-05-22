@@ -55,12 +55,14 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         element_CBX_garden.setChecked(true);
 
         user = User.getInstance();
+        url += "/" + user.getEmail();
         requestQueue = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
         initVolleyInterface();
         volleyHelper = new VolleyHelper(volleyResultInterface);
         return view;
     }
 
+    // Method that init the volley interface.
     private void initVolleyInterface() {
         volleyResultInterface = new VolleyResultInterface() {
             @Override
@@ -109,10 +111,11 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                         type = element_CBX_facility.getText().toString();
                     }
                     name = element_EDT_name.getText().toString();
+                    active = true;
                     lat = Double.parseDouble(element_EDT_latitude.getText().toString());
                     lng = Double.parseDouble(element_EDT_longitude.getText().toString());
 
-                    url += "/" + user.getEmail();
+
                     JSONObject jsonBody = new JSONObject();
                     JSONObject locationJson = new JSONObject();
                     try {
@@ -120,6 +123,7 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                         locationJson.put("lng", lng);
                         jsonBody.put("type", type);
                         jsonBody.put("name", name);
+                        jsonBody.put("active", active);
                         jsonBody.put("location", locationJson);
                     } catch (JSONException e) {
                         e.printStackTrace();

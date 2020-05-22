@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Element {
 
-    private String name, type;
+    private String id,name, type;
     private Boolean active;
     private Location location;
     private Map<String, Object> elementAttributes;
@@ -23,6 +23,14 @@ public class Element {
     }
 
     // Getters and setters.
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
