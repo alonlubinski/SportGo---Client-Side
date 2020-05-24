@@ -3,6 +3,8 @@ package com.alon.client.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,6 +18,9 @@ import android.widget.Toast;
 
 import com.alon.client.Constants;
 import com.alon.client.R;
+import com.alon.client.utils.Element;
+import com.alon.client.utils.Location;
+import com.alon.client.utils.RecyclerViewAdapter;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -24,20 +29,28 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class SearchGardenFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private RadioGroup garden_RGP_group;
     private EditText garden_EDT_value;
+    private TextView garden_LBL_results;
     private Button garden_BTN_search;
     private String type = "byName", value, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private Double distance;
+    private RecyclerView garden_RCV_result;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     private User user;
     private RequestQueue requestQueue;
     private VolleyHelper volleyHelper;
     private VolleyResultInterface volleyResultInterface;
+    private ArrayList<Element> gardenArrayList = new ArrayList<>();
 
     public SearchGardenFragment() {
     }
@@ -61,6 +74,10 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
             @Override
             public void notifyError(VolleyError error) {
                 garden_BTN_search.setClickable(true);
+                if(garden_RCV_result != null){
+                    garden_RCV_result.removeAllViewsInLayout();
+                }
+                garden_LBL_results.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -71,6 +88,19 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
             @Override
             public void notifySuccessArray(JSONArray response) {
                 garden_BTN_search.setClickable(true);
+                convertJSONArrayToArrayList(response);
+                if(garden_RCV_result != null){
+                    garden_RCV_result.removeAllViewsInLayout();
+                }
+                if(gardenArrayList.size() != 0){
+                    if(garden_LBL_results.getVisibility() == View.VISIBLE){
+                        garden_LBL_results.setVisibility(View.GONE);
+                    }
+                    initRecyclerView();
+                } else {
+                    garden_LBL_results.setVisibility(View.VISIBLE);
+                }
+
             }
         };
     }
@@ -80,6 +110,8 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
         garden_RGP_group = view.findViewById(R.id.search_RGP_garden);
         garden_EDT_value = view.findViewById(R.id.search_garden_EDT_value);
         garden_BTN_search = view.findViewById(R.id.search_garden_BTN_search);
+        garden_RCV_result = view.findViewById(R.id.search_RCV_gardens);
+        garden_LBL_results = view.findViewById(R.id.search_garden_LBL_results);
     }
 
     @Override
@@ -128,6 +160,35 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
                 garden_EDT_value.setInputType(InputType.TYPE_CLASS_NUMBER);
                 type = "near";
                 break;
+        }
+    }
+
+    // Method that init the recycler view.
+    private void initRecyclerView(){
+        garden_RCV_result.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this.getContext());
+        garden_RCV_result.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerViewAdapter(gardenArrayList);
+        garden_RCV_result.setAdapter(mAdapter);
+    }
+
+    // Method that convert json array to array list.
+    private void convertJSONArrayToArrayList(JSONArray jsonArray){
+        gardenArrayList.clear();
+        for(int i = 0; i < jsonArray.length(); i++){
+            Element element = new Element();
+            try {
+                element.setId(jsonArray.getJSONObject(i).getString("elementId"));
+                element.setName(jsonArray.getJSONObject(i).getString("name"));
+                element.setType(jsonArray.getJSONObject(i).getString("type"));
+                element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
+                element.setLocation(new Location(
+                        jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
+                        jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            gardenArrayList.add(element);
         }
     }
 }

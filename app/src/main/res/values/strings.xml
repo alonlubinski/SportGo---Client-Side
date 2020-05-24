@@ -32,4 +32,11 @@
     <string name="distance_str">Distance</string>
     <string name="enter_search_value_str">Enter Search Value (Distance in KM)</string>
     <string name="search_str">Search</string>
+    <string name="name_RCV_str">"Name: "</string>
+    <string name="location_RCV_str">"Location: "</string>
+    <string name="active_RCV_str">"Active: "</string>
+    <string name="no_results_found_str">No Results Found</string>
+    <string name="details_str">Details</string>
+    <string name="active_str">Active</string>
+    <string name="facilities_str">Facilities</string>
 </resources>

@@ -75,6 +75,24 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"/>
 
+            <TextView
+                android:id="@+id/search_garden_LBL_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_results_found_str"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@color/green"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_RCV_gardens"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
 
