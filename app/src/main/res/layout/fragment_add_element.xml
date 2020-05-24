@@ -32,16 +32,21 @@
                 android:textSize="20sp"
                 android:layout_marginTop="30dp"/>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/element_CBX_garden"
+            <RadioGroup
+                android:id="@+id/add_element_RGP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/garden_str"/>
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/element_CBX_facility"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/facility_str"/>
+                android:checkedButton="@id/add_element_RBTN_garden">
+                <RadioButton
+                    android:id="@+id/add_element_RBTN_garden"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/garden_str"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/facility_str"/>
+            </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"

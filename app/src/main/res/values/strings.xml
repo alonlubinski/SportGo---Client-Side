@@ -27,4 +27,9 @@
     <string name="location_str">Location</string>
     <string name="element_latitude_str">Latitude</string>
     <string name="element_longitude_str">Longitude</string>
+    <string name="search_by_str">Search By</string>
+    <string name="name_str">Name</string>
+    <string name="distance_str">Distance</string>
+    <string name="enter_search_value_str">Enter Search Value (Distance in KM)</string>
+    <string name="search_str">Search</string>
 </resources>

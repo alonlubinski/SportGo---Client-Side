@@ -2,15 +2,14 @@ package com.alon.client.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.alon.client.Constants;
@@ -28,14 +27,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class AddElementFragment extends Fragment implements View.OnClickListener {
+public class AddElementFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private Button element_BTN_add;
-    private String type, name, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
+    private String type = "Garden", name, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private Boolean active;
     private Double lat, lng;
     private Location location;
-    private AppCompatCheckBox element_CBX_garden, element_CBX_facility;
+    private RadioGroup element_RGP;
     private EditText element_EDT_name, element_EDT_latitude, element_EDT_longitude;
     private User user;
     private RequestQueue requestQueue;
@@ -51,8 +50,8 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_element, container, false);
         findAll(view);
+        element_RGP.setOnCheckedChangeListener(this);
         element_BTN_add.setOnClickListener(this);
-        element_CBX_garden.setChecked(true);
 
         user = User.getInstance();
         url += "/" + user.getEmail();
@@ -74,8 +73,6 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
             @Override
             public void notifySuccessObject(JSONObject response) {
                 Toast.makeText(getContext(), "Element add to db!", Toast.LENGTH_LONG).show();
-                element_CBX_garden.setChecked(true);
-                element_CBX_facility.setChecked(false);
                 element_EDT_name.setText("");
                 element_EDT_latitude.setText("");
                 element_EDT_longitude.setText("");
@@ -92,8 +89,7 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
     // Method that find all the views by id.
     private void findAll(View view) {
         element_BTN_add = view.findViewById(R.id.element_BTN_add);
-        element_CBX_garden = view.findViewById(R.id.element_CBX_garden);
-        element_CBX_facility = view.findViewById(R.id.element_CBX_facility);
+        element_RGP = view.findViewById(R.id.add_element_RGP);
         element_EDT_name = view.findViewById(R.id.element_EDT_name);
         element_EDT_latitude = view.findViewById(R.id.element_EDT_latitude);
         element_EDT_longitude = view.findViewById(R.id.element_EDT_longitude);
@@ -105,16 +101,10 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
             case R.id.element_BTN_add:
                 element_BTN_add.setClickable(false);
                 if(checkInputValidation()){
-                    if(element_CBX_garden.isChecked()){
-                        type = element_CBX_garden.getText().toString();
-                    } else {
-                        type = element_CBX_facility.getText().toString();
-                    }
                     name = element_EDT_name.getText().toString();
                     active = true;
                     lat = Double.parseDouble(element_EDT_latitude.getText().toString());
                     lng = Double.parseDouble(element_EDT_longitude.getText().toString());
-
 
                     JSONObject jsonBody = new JSONObject();
                     JSONObject locationJson = new JSONObject();
@@ -134,21 +124,6 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                     element_BTN_add.setClickable(true);
                 }
                 break;
-
-                //TODO it should be possible to choose only one but it don't work
-            case R.id.element_CBX_garden:
-                if(element_CBX_facility.isChecked()) {
-                    element_CBX_facility.setChecked(false);
-                    element_CBX_garden.setChecked(true);
-                }
-                break;
-
-            case R.id.element_CBX_facility:
-                if(element_CBX_garden.isChecked()) {
-                    element_CBX_garden.setChecked(false);
-                    element_CBX_facility.setChecked(true);
-                }
-                break;
         }
     }
 
@@ -164,5 +139,20 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        View radioButton = radioGroup.findViewById(i);
+        int index = radioGroup.indexOfChild(radioButton);
+        switch(index){
+            case 0:
+                type = "Garden";
+                break;
+
+            case 1:
+                type = "Facility";
+                break;
+        }
     }
 }

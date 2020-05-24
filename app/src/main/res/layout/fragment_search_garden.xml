@@ -5,11 +5,79 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SearchGardenFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is search garden fragment"
-        android:gravity="center"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_search_garden"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:textSize="40sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_by_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"/>
+
+            <RadioGroup
+                android:id="@+id/search_RGP_garden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/search_garden_RBT_name">
+
+                <RadioButton
+                    android:id="@+id/search_garden_RBT_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_str"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distance_str"/>
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/search_garden_EDT_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_search_value_str"
+                android:background="@drawable/edit_text_background"
+                android:padding="15dp"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:inputType="text"/>
+
+            <Button
+                android:id="@+id/search_garden_BTN_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="@string/search_str"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 </FrameLayout>
