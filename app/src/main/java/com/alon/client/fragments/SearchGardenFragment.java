@@ -20,7 +20,7 @@ import com.alon.client.Constants;
 import com.alon.client.R;
 import com.alon.client.utils.Element;
 import com.alon.client.utils.Location;
-import com.alon.client.utils.RecyclerViewAdapter;
+import com.alon.client.utils.GardenRecyclerViewAdapter;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -168,7 +168,7 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
         garden_RCV_result.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this.getContext());
         garden_RCV_result.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerViewAdapter(gardenArrayList);
+        mAdapter = new GardenRecyclerViewAdapter(gardenArrayList);
         garden_RCV_result.setAdapter(mAdapter);
     }
 
@@ -176,19 +176,23 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
     private void convertJSONArrayToArrayList(JSONArray jsonArray){
         gardenArrayList.clear();
         for(int i = 0; i < jsonArray.length(); i++){
-            Element element = new Element();
             try {
-                element.setId(jsonArray.getJSONObject(i).getString("elementId"));
-                element.setName(jsonArray.getJSONObject(i).getString("name"));
-                element.setType(jsonArray.getJSONObject(i).getString("type"));
-                element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
-                element.setLocation(new Location(
-                        jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
-                        jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                if(jsonArray.getJSONObject(i).getString("type").equals("Garden")){
+                    Element element = new Element();
+                    element.setId(jsonArray.getJSONObject(i).getString("elementId"));
+                    element.setName(jsonArray.getJSONObject(i).getString("name"));
+                    element.setType(jsonArray.getJSONObject(i).getString("type"));
+                    element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
+                    element.setLocation(new Location(
+                            jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
+                            jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                    gardenArrayList.add(element);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            gardenArrayList.add(element);
+
         }
     }
 }

@@ -39,4 +39,5 @@
     <string name="details_str">Details</string>
     <string name="active_str">Active</string>
     <string name="facilities_str">Facilities</string>
+    <string name="garden_RCV_str">"Garden: "</string>
 </resources>

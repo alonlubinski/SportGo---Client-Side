@@ -14,7 +14,7 @@ import com.alon.client.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecyclerViewAdapter.MyViewHolder> {
 
     private ArrayList<Element> mDataset;
 
@@ -23,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public Element garden;
         public TextView element_LBL_name, element_LBL_location, element_LBL_active;
         public Button element_BTN_details;
         private Context context;
@@ -50,20 +51,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // Method that start the garden details activity.
         private void startGardenDetailsActivity() {
             Intent intent = new Intent(context, GardenDetailsActivity.class);
+            intent.putExtra("name", garden.getName());
+            intent.putExtra("location", garden.getLocation().getLat() + ", " + garden.getLocation().getLng());
+            intent.putExtra("active", garden.getActive());
             context.startActivity(intent);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerViewAdapter(ArrayList<Element> myDataset) {
+    public GardenRecyclerViewAdapter(ArrayList<Element> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GardenRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.garden_row, parent, false);
         MyViewHolder vh = new MyViewHolder(view);
         return vh;
     }
@@ -76,6 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.element_LBL_name.setText(mDataset.get(position).getName());
         holder.element_LBL_location.setText(mDataset.get(position).getLocation().getLat() + ", " + mDataset.get(position).getLocation().getLng());
         holder.element_LBL_active.setText(mDataset.get(position).getActive().toString());
+        holder.garden = mDataset.get(position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
