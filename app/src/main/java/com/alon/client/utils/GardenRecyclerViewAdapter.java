@@ -52,7 +52,7 @@ public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecycl
         private void startGardenDetailsActivity() {
             Intent intent = new Intent(context, GardenDetailsActivity.class);
             intent.putExtra("name", garden.getName());
-            intent.putExtra("location", garden.getLocation().getLat() + ", " + garden.getLocation().getLng());
+            intent.putExtra("location", garden.getLocationUtil().getLat() + ", " + garden.getLocationUtil().getLng());
             intent.putExtra("active", garden.getActive());
             context.startActivity(intent);
         }
@@ -78,7 +78,7 @@ public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecycl
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.element_LBL_name.setText(mDataset.get(position).getName());
-        holder.element_LBL_location.setText(mDataset.get(position).getLocation().getLat() + ", " + mDataset.get(position).getLocation().getLng());
+        holder.element_LBL_location.setText(mDataset.get(position).getLocationUtil().getLat() + ", " + mDataset.get(position).getLocationUtil().getLng());
         holder.element_LBL_active.setText(mDataset.get(position).getActive().toString());
         holder.garden = mDataset.get(position);
     }

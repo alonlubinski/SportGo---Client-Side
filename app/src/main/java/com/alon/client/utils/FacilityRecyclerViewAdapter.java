@@ -55,7 +55,7 @@ public class FacilityRecyclerViewAdapter extends RecyclerView.Adapter<FacilityRe
         private void startFacilityDetailsActivity() {
             Intent intent = new Intent(context, FacilityDetailsActivity.class);
             intent.putExtra("name", facility.getName());
-            intent.putExtra("location", facility.getLocation().getLat() + ", " + facility.getLocation().getLng());
+            intent.putExtra("location", facility.getLocationUtil().getLat() + ", " + facility.getLocationUtil().getLng());
             intent.putExtra("active", facility.getActive());
             context.startActivity(intent);
         }
@@ -81,7 +81,7 @@ public class FacilityRecyclerViewAdapter extends RecyclerView.Adapter<FacilityRe
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.facility_LBL_name.setText(mDataset.get(position).getName());
-        holder.facility_LBL_location.setText(mDataset.get(position).getLocation().getLat() + ", " + mDataset.get(position).getLocation().getLng());
+        holder.facility_LBL_location.setText(mDataset.get(position).getLocationUtil().getLat() + ", " + mDataset.get(position).getLocationUtil().getLng());
         holder.facility_LBL_active.setText(mDataset.get(position).getActive().toString());
         holder.facility = mDataset.get(position);
     }

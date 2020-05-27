@@ -4,6 +4,8 @@ public class User {
     private static User instance;
     private String email, username, avatar;
     private String userRole;
+    private LocationUtil location;
+
 
     // Constructor.
     private User() {
@@ -47,6 +49,14 @@ public class User {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public LocationUtil getLocationUtil() {
+        return location;
+    }
+
+    public void setLocationUtil(LocationUtil location) {
+        this.location = location;
     }
 
 

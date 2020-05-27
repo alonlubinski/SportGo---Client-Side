@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 import com.alon.client.Constants;
 import com.alon.client.R;
 import com.alon.client.utils.Element;
-import com.alon.client.utils.Location;
+import com.alon.client.utils.LocationUtil;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -44,6 +43,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private VolleyResultInterface volleyResultInterface;
     private String url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private ArrayList<Element> elementArrayList = new ArrayList<>();
+
 
     public HomeFragment() {
     }
@@ -92,8 +92,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.4117257, 35.0818155), 7));
-       // map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 13));
+        map.setMyLocationEnabled(true);
         volleyHelper.getArrayDataVolley(requestQueue, url);
     }
 
@@ -102,8 +103,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         if(!elementArrayList.isEmpty()){
             for(int i = 0; i < elementArrayList.size(); i++){
                 map.addMarker(new MarkerOptions()
-                        .position(new LatLng(elementArrayList.get(i).getLocation().getLat(),
-                                             elementArrayList.get(i).getLocation().getLng())))
+                        .position(new LatLng(elementArrayList.get(i).getLocationUtil().getLat(),
+                                             elementArrayList.get(i).getLocationUtil().getLng())))
                         .setTitle(elementArrayList.get(i).getName());
             }
         }
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 element.setName(jsonArray.getJSONObject(i).getString("name"));
                 element.setType(jsonArray.getJSONObject(i).getString("type"));
                 element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
-                element.setLocation(new Location(
+                element.setLocationUtil(new LocationUtil(
                         jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                         jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
             } catch (JSONException e) {

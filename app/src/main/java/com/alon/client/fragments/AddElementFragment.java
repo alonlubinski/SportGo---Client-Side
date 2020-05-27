@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.alon.client.Constants;
 import com.alon.client.R;
-import com.alon.client.utils.Location;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -33,7 +32,6 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
     private String type = "Garden", name, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private Boolean active;
     private Double lat, lng;
-    private Location location;
     private RadioGroup element_RGP;
     private EditText element_EDT_name, element_EDT_latitude, element_EDT_longitude;
     private User user;

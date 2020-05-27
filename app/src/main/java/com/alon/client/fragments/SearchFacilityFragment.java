@@ -19,7 +19,7 @@ import com.alon.client.Constants;
 import com.alon.client.R;
 import com.alon.client.utils.Element;
 import com.alon.client.utils.FacilityRecyclerViewAdapter;
-import com.alon.client.utils.Location;
+import com.alon.client.utils.LocationUtil;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -124,7 +124,8 @@ public class SearchFacilityFragment extends Fragment implements View.OnClickList
                         newUrl = url + "/" + user.getEmail() +"/search/byName/" + value;
                     } else {
                         distance = Double.parseDouble(value);
-                        newUrl = url + "/" + user.getEmail() + "/search/near/32.071012/34.831162/" + distance;
+                        newUrl = url + "/" + user.getEmail() + "/search/near/" +
+                                user.getLocationUtil().getLat() + "/" + user.getLocationUtil().getLng() + "/" + distance;
                     }
                     volleyHelper.getArrayDataVolley(requestQueue, newUrl);
                 } else {
@@ -181,7 +182,7 @@ public class SearchFacilityFragment extends Fragment implements View.OnClickList
                     element.setName(jsonArray.getJSONObject(i).getString("name"));
                     element.setType(jsonArray.getJSONObject(i).getString("type"));
                     element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
-                    element.setLocation(new Location(
+                    element.setLocationUtil(new LocationUtil(
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
                     facilityArrayList.add(element);

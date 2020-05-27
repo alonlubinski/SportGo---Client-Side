@@ -7,14 +7,14 @@ public class Element {
 
     private String id,name, type;
     private Boolean active;
-    private Location location;
+    private LocationUtil location;
     private Map<String, Object> elementAttributes;
 
     // Constructors.
     public Element() {
     }
 
-    public Element(String name, String type, Boolean active, Location location, Map<String, Object> elementAttributes) {
+    public Element(String name, String type, Boolean active, LocationUtil location, Map<String, Object> elementAttributes) {
         this.name = name;
         this.type = type;
         this.active = active;
@@ -55,11 +55,11 @@ public class Element {
         this.active = active;
     }
 
-    public Location getLocation() {
+    public LocationUtil getLocationUtil() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocationUtil(LocationUtil location) {
         this.location = location;
     }
 

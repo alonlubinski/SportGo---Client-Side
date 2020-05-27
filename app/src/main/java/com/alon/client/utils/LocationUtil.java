@@ -1,15 +1,15 @@
 package com.alon.client.utils;
 
-public class Location {
+public class LocationUtil {
 
     private double lat, lng;
 
     // Constructors.
-    public Location(){
+    public LocationUtil(){
 
     }
 
-    public Location(double lat, double lng) {
+    public LocationUtil(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
     }
