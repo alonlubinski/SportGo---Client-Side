@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FacilityDetailsActivity"></activity>
+        <activity android:name=".FacilityDetailsActivity" />
         <activity android:name=".GardenDetailsActivity" />
         <activity android:name=".UpdateProfileActivity" />
 

@@ -180,7 +180,7 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
             try {
                 if(jsonArray.getJSONObject(i).getString("type").equals("Garden")){
                     Element element = new Element();
-                    element.setId(jsonArray.getJSONObject(i).getString("elementId"));
+                    element.setId(jsonArray.getJSONObject(i).getJSONObject("elementId").getString("id"));
                     element.setName(jsonArray.getJSONObject(i).getString("name"));
                     element.setType(jsonArray.getJSONObject(i).getString("type"));
                     element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));

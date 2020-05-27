@@ -41,4 +41,5 @@
     <string name="facilities_str">Facilities</string>
     <string name="garden_RCV_str">"Garden: "</string>
     <string name="address_str">Address</string>
+    <string name="garden_name_str">Enter Garden Name</string>
 </resources>
