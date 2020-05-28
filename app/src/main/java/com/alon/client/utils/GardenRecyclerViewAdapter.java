@@ -51,6 +51,7 @@ public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecycl
         // Method that start the garden details activity.
         private void startGardenDetailsActivity() {
             Intent intent = new Intent(context, GardenDetailsActivity.class);
+            intent.putExtra("id", garden.getId());
             intent.putExtra("name", garden.getName());
             intent.putExtra("location", garden.getLocationUtil().getLat() + ", " + garden.getLocationUtil().getLng());
             intent.putExtra("active", garden.getActive());

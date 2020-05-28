@@ -1,5 +1,8 @@
 package com.alon.client.fragments;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.alon.client.Constants;
+import com.alon.client.GardenDetailsActivity;
 import com.alon.client.R;
 import com.alon.client.utils.Element;
 import com.alon.client.utils.LocationUtil;
@@ -25,16 +29,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
-public class HomeFragment extends Fragment implements OnMapReadyCallback {
+public class HomeFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     GoogleMap map;
     private User user;
@@ -96,16 +104,33 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 13));
         map.setMyLocationEnabled(true);
         volleyHelper.getArrayDataVolley(requestQueue, url);
+        map.setOnInfoWindowClickListener(this);
     }
 
     // Method that init all the garden elements to the map.
     private void initElementToMap(GoogleMap map){
         if(!elementArrayList.isEmpty()){
             for(int i = 0; i < elementArrayList.size(); i++){
-                map.addMarker(new MarkerOptions()
-                        .position(new LatLng(elementArrayList.get(i).getLocationUtil().getLat(),
-                                             elementArrayList.get(i).getLocationUtil().getLng())))
-                        .setTitle(elementArrayList.get(i).getName());
+                String address;
+                LatLng latLng = new LatLng(elementArrayList.get(i).getLocationUtil().getLat(),
+                        elementArrayList.get(i).getLocationUtil().getLng());
+                Geocoder geocoder = new Geocoder(this.getContext(), Locale.getDefault());
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    if(!addresses.isEmpty()){
+                        address = addresses.get(0).getAddressLine(0);
+                    } else {
+                        address = "Address Not Available";
+                    }
+                    map.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .snippet(address)
+                            .title(elementArrayList.get(i).getName()))
+                            .setTag(elementArrayList.get(i));
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+
             }
         }
     }
@@ -114,7 +139,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         for(int i = 0; i < jsonArray.length(); i++){
             Element element = new Element();
             try {
-                element.setId(jsonArray.getJSONObject(i).getString("elementId"));
+                element.setId(jsonArray.getJSONObject(i).getJSONObject("elementId").getString("id"));
                 element.setName(jsonArray.getJSONObject(i).getString("name"));
                 element.setType(jsonArray.getJSONObject(i).getString("type"));
                 element.setActive(jsonArray.getJSONObject(i).getBoolean("active"));
@@ -126,5 +151,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
             elementArrayList.add(element);
         }
+    }
+
+    // Method that start the garden details activity.
+    private void startGardenDetailsActivity(Element garden) {
+        Intent intent = new Intent(this.getContext(), GardenDetailsActivity.class);
+        intent.putExtra("id", garden.getId());
+        intent.putExtra("name", garden.getName());
+        intent.putExtra("location", garden.getLocationUtil().getLat() + ", " + garden.getLocationUtil().getLng());
+        intent.putExtra("active", garden.getActive());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        startGardenDetailsActivity((Element) marker.getTag());
     }
 }
