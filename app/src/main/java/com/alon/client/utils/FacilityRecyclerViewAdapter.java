@@ -71,7 +71,7 @@ public class FacilityRecyclerViewAdapter extends RecyclerView.Adapter<FacilityRe
     public FacilityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.facility_row, parent, false);
-        FacilityRecyclerViewAdapter.MyViewHolder vh = new FacilityRecyclerViewAdapter.MyViewHolder(view);
+        MyViewHolder vh = new MyViewHolder(view);
         return vh;
     }
 

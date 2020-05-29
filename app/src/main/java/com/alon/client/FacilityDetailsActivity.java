@@ -14,7 +14,7 @@ import java.util.Locale;
 public class FacilityDetailsActivity extends AppCompatActivity {
 
     private TextView facility_LBL_name, facility_LBL_garden, facility_LBL_address, facility_LBL_location, facility_LBL_active;
-    private String name, garden, address, location;
+    private String name, garden, address = null, location;
     private Boolean active;
 
     @Override
@@ -36,7 +36,11 @@ public class FacilityDetailsActivity extends AppCompatActivity {
 
     private void initDetails() {
         facility_LBL_name.setText(name);
-        facility_LBL_address.setText(address);
+        if(address != null) {
+            facility_LBL_address.setText(address);
+        } else {
+            facility_LBL_address.setText("Address not available");
+        }
         facility_LBL_location.setText(location);
         facility_LBL_active.setText(active.toString());
     }
@@ -55,7 +59,9 @@ public class FacilityDetailsActivity extends AppCompatActivity {
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            address = addresses.get(0).getAddressLine(0);
+            if(!addresses.isEmpty()) {
+                address = addresses.get(0).getAddressLine(0);
+            }
         } catch (IOException e){
             e.printStackTrace();
         }
