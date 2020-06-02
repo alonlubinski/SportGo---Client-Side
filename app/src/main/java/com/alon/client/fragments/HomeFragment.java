@@ -81,7 +81,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                String errorMessage = volleyHelper.handleErrorMessage(error);
+                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
             }
 
             @Override

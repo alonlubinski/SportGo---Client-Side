@@ -1,7 +1,6 @@
 package com.alon.client.volley;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -10,6 +9,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class VolleyHelper {
@@ -121,5 +121,18 @@ public class VolleyHelper {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public String handleErrorMessage(VolleyError volleyError){
+        String error = null;
+        try {
+            byte[] bytes = volleyError.networkResponse.data;
+            String errorStr = new String(bytes);
+            JSONObject errorJson = new JSONObject(errorStr);
+            error = errorJson.get("message").toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return error;
     }
 }

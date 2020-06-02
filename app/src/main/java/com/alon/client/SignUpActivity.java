@@ -44,7 +44,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
-                signup_LBL_data.setText(error.toString());
+                String errorMessage = volleyHelper.handleErrorMessage(error);
+                signup_LBL_data.setText(errorMessage);
                 signup_BTN_signup.setClickable(true);
             }
 

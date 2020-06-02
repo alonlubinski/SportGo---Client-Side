@@ -50,7 +50,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     user.setAvatar(avatar);
                     finish();
                 } else{
-                    Toast.makeText(UpdateProfileActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    String errorMessage = volleyHelper.handleErrorMessage(error);
+                    Toast.makeText(UpdateProfileActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                     update_BTN_confirm.setClickable(true);
                 }
             }

@@ -81,7 +81,8 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                     put = false;
                     element_BTN_add.setClickable(true);
                 } else {
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    String errorMessage = volleyHelper.handleErrorMessage(error);
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
                 }
                 element_BTN_add.setClickable(true);
             }

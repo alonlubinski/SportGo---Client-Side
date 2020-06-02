@@ -63,7 +63,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
-                login_LBL_data.setText(error.toString());
+                String errorMessage = volleyHelper.handleErrorMessage(error);
+                login_LBL_data.setText(errorMessage);
                 login_BTN_login.setClickable(true);
             }
 
