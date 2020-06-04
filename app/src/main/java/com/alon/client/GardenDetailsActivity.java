@@ -11,11 +11,13 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.media.Rating;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +45,7 @@ import java.util.Locale;
 public class GardenDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView garden_LBL_name, garden_LBL_address, garden_LBL_location, garden_LBL_active, garden_LBL_rating;
-    private String id, name, address = null, location, rating, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
+    private String id, name, address = null, location, rating, ratedBy, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private Boolean active;
     private int usersVote;
     private Button garden_BTN_vote;
@@ -55,6 +57,9 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
     private RequestQueue requestQueue;
     private VolleyHelper volleyHelper;
     private VolleyResultInterface volleyResultInterface;
+    private Dialog rankDialog;
+    private ProgressBar garden_PRB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,8 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_garden_details);
         user = User.getInstance();
         findAll();
+        rankDialog = new Dialog(this);
+        createRatingPopupWindow(rankDialog);
         garden_BTN_vote.setOnClickListener(this);
         if(getIntent().getExtras() != null){
             id = getIntent().getStringExtra("id");
@@ -73,6 +80,7 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
             Double lng = Double.parseDouble(locationArr[1]);
             convertToAddress(lat, lng);
             rating = getIntent().getStringExtra("rating");
+            ratedBy = getIntent().getStringExtra("numOfRatedBy");
             initDetails();
         }
 
@@ -87,13 +95,16 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
+                garden_PRB.setVisibility(View.GONE);
                 String errorMessage = volleyHelper.handleErrorMessage(error);
                 Toast.makeText(GardenDetailsActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void notifySuccessObject(JSONObject response) {
+                garden_PRB.setVisibility(View.GONE);
                 Toast.makeText(GardenDetailsActivity.this, "Thank you for voting!", Toast.LENGTH_LONG).show();
+                rankDialog.dismiss();
             }
 
             @Override
@@ -115,7 +126,7 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         }
         garden_LBL_location.setText(location);
         garden_LBL_active.setText(active.toString());
-        garden_LBL_rating.setText(rating);
+        garden_LBL_rating.setText(rating + "/5.0 (Rated by " + ratedBy + " people)");
     }
 
     // Method that find all the views by id.
@@ -127,6 +138,7 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         garden_LBL_active = findViewById(R.id.garden_LBL_active);
         garden_RCV_facilities = findViewById(R.id.garden_RCV_facilities);
         garden_LBL_rating = findViewById(R.id.garden_LBL_rating);
+        garden_PRB = findViewById(R.id.garden_PRB);
     }
 
     // Method that convert location to address.
@@ -179,38 +191,36 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.garden_BTN_vote:
-                showRatingPopupWindow();
+                rankDialog.show();
                 break;
         }
     }
 
-    // Method that show the rating pop up window.
-    private void showRatingPopupWindow() {
-        final Dialog rankDialog = new Dialog(this);
-        rankDialog.setContentView(R.layout.rating_dialog);
-        rankDialog.setCancelable(true);
-        final RatingBar rating_RGB = rankDialog.findViewById(R.id.rating_RGB);
+    // Method that create the rating pop up window.
+    private void createRatingPopupWindow(final Dialog dialog) {
+        dialog.setContentView(R.layout.rating_dialog);
+        dialog.setCancelable(true);
+        final RatingBar rating_RGB = dialog.findViewById(R.id.rating_RGB);
 
         Button rating_BTN_confirm,  rating_BTN_cancel;
-        rating_BTN_confirm = rankDialog.findViewById(R.id.rating_BTN_confirm);
-        rating_BTN_cancel = rankDialog.findViewById(R.id.rating_BTN_cancel);
+        rating_BTN_confirm = dialog.findViewById(R.id.rating_BTN_confirm);
+        rating_BTN_cancel = dialog.findViewById(R.id.rating_BTN_cancel);
         rating_BTN_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                garden_PRB.setVisibility(View.VISIBLE);
                 usersVote = (int) rating_RGB.getRating();
                 sendRatingToTheServer();
-                rankDialog.dismiss();
             }
         });
 
         rating_BTN_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rankDialog.dismiss();
+                dialog.dismiss();
             }
         });
 
-        rankDialog.show();
     }
 
     private void sendRatingToTheServer(){

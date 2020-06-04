@@ -8,6 +8,16 @@
     tools:context=".GardenDetailsActivity">
 
 
+    <ProgressBar
+        android:id="@+id/garden_PRB"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@xml/circular_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

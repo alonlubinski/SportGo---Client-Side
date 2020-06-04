@@ -187,6 +187,9 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
                     element.setLocationUtil(new LocationUtil(
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                    element.getElementAttributes().put("rating", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("rating"));
+                    element.getElementAttributes().put("numOfRatedBy", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("numOfRatedBy"));
+                    System.out.println(jsonArray.getJSONObject(i));
                     gardenArrayList.add(element);
                 }
 

@@ -13,6 +13,7 @@ import com.alon.client.GardenDetailsActivity;
 import com.alon.client.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecyclerViewAdapter.MyViewHolder> {
 
@@ -55,6 +56,8 @@ public class GardenRecyclerViewAdapter extends RecyclerView.Adapter<GardenRecycl
             intent.putExtra("name", garden.getName());
             intent.putExtra("location", garden.getLocationUtil().getLat() + ", " + garden.getLocationUtil().getLng());
             intent.putExtra("active", garden.getActive());
+            intent.putExtra("rating", String.valueOf(garden.getElementAttributes().get("rating")));
+            intent.putExtra("numOfRatedBy", String.valueOf(garden.getElementAttributes().get("numOfRatedBy")));
             context.startActivity(intent);
         }
     }

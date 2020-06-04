@@ -1,6 +1,7 @@
 package com.alon.client.utils;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Element {
@@ -12,6 +13,7 @@ public class Element {
 
     // Constructors.
     public Element() {
+        elementAttributes = new HashMap<>();
     }
 
     public Element(String name, String type, Boolean active, LocationUtil location, Map<String, Object> elementAttributes) {

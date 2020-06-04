@@ -147,6 +147,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                 element.setLocationUtil(new LocationUtil(
                         jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                         jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                element.getElementAttributes().put("rating", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("rating"));
+                element.getElementAttributes().put("numOfRatedBy", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("numOfRatedBy"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -161,6 +163,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         intent.putExtra("name", garden.getName());
         intent.putExtra("location", garden.getLocationUtil().getLat() + ", " + garden.getLocationUtil().getLng());
         intent.putExtra("active", garden.getActive());
+        intent.putExtra("rating", String.valueOf(garden.getElementAttributes().get("rating")));
+        intent.putExtra("numOfRatedBy", String.valueOf(garden.getElementAttributes().get("numOfRatedBy")));
         startActivity(intent);
     }
 
