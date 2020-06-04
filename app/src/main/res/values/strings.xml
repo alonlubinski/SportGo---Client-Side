@@ -42,4 +42,9 @@
     <string name="garden_RCV_str">"Garden: "</string>
     <string name="address_str">Address</string>
     <string name="garden_name_str">Enter Garden Name</string>
+    <string name="menu_admin_dash">Admin Dashboard</string>
+    <string name="element_description_str">Element Description</string>
+    <string name="rating_str">Rating</string>
+    <string name="vote_str">Vote</string>
+    <string name="cancel_str">Cancel</string>
 </resources>

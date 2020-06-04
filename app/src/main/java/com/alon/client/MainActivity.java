@@ -48,7 +48,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupDrawerContent(navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(!user.getUserRole().equals(UserRole.MANAGER.toString())){
+        if(user.getUserRole().equals(UserRole.PLAYER.toString())){
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        } else if(user.getUserRole().equals(UserRole.MANAGER.toString())){
+            navigationView.getMenu().getItem(5).setVisible(false);
+        } else {
             navigationView.getMenu().getItem(4).setVisible(false);
         }
         getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new HomeFragment()).commit();

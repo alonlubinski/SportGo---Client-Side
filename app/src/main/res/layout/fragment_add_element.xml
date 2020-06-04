@@ -5,120 +5,163 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AddElementFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_element_str"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:textColor="@color/green"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_str"
-                android:textStyle="bold"
-                android:textColor="@color/green"
-                android:textSize="20sp"
-                android:layout_marginTop="30dp"/>
-
-            <RadioGroup
-                android:id="@+id/add_element_RGP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkedButton="@id/add_element_RBTN_garden">
-                <RadioButton
-                    android:id="@+id/add_element_RBTN_garden"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/garden_str"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/facility_str"/>
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_name_str"
-                android:textStyle="bold"
-                android:textColor="@color/green"
-                android:textSize="20sp"
-                android:layout_marginTop="30dp"/>
-
-            <EditText
-                android:id="@+id/element_EDT_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/element_name_str"
-                android:background="@drawable/edit_text_background"
-                android:padding="15dp"
-                android:elevation="5dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location_str"
-                android:textStyle="bold"
-                android:textColor="@color/green"
-                android:textSize="20sp"
-                android:layout_marginTop="30dp"/>
-
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_element_str"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/type_str"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:layout_marginTop="30dp"/>
+
+                <RadioGroup
+                    android:id="@+id/add_element_RGP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/add_element_RBTN_garden">
+                    <RadioButton
+                        android:id="@+id/add_element_RBTN_garden"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/garden_str"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/facility_str"/>
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_name_str"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:layout_marginTop="30dp"/>
 
                 <EditText
-                    android:id="@+id/element_EDT_latitude"
-                    android:layout_width="0dp"
+                    android:id="@+id/element_EDT_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/element_latitude_str"
+                    android:hint="@string/element_name_str"
                     android:background="@drawable/edit_text_background"
                     android:padding="15dp"
-                    android:elevation="5dp"
-                    android:layout_marginRight="2dp"/>
+                    android:elevation="5dp"/>
 
-                <EditText
-                    android:id="@+id/element_EDT_longitude"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/element_longitude_str"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="15dp"
-                    android:elevation="5dp"
-                    android:layout_marginLeft="2dp"/>
+                    android:text="@string/location_str"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:layout_marginTop="30dp"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/element_EDT_latitude"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/element_latitude_str"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="15dp"
+                        android:elevation="5dp"
+                        android:layout_marginRight="2dp"/>
+
+                    <EditText
+                        android:id="@+id/element_EDT_longitude"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/element_longitude_str"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="15dp"
+                        android:elevation="5dp"
+                        android:layout_marginLeft="2dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/element_LYT_facility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/element_SPN_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:id="@+id/element_SPN_muscale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/element_description_str"
+                        android:textStyle="bold"
+                        android:textColor="@color/green"
+                        android:textSize="20sp"
+                        android:layout_marginTop="30dp"/>
+
+                    <EditText
+                        android:id="@+id/element_EDT_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/element_description_str"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="15dp"
+                        android:elevation="5dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/element_BTN_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="@string/add_str"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:elevation="5dp"/>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/element_BTN_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:text="@string/add_str"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="10dp"
-            android:elevation="5dp"/>
-    </RelativeLayout>
-
+    </ScrollView>
 </FrameLayout>

@@ -8,16 +8,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.alon.client.Constants;
 import com.alon.client.R;
 import com.alon.client.utils.Element;
+import com.alon.client.utils.FacilityStatus;
+import com.alon.client.utils.FacilityType;
 import com.alon.client.utils.LocationUtil;
+import com.alon.client.utils.MuscaleGroup;
 import com.alon.client.utils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
@@ -36,11 +41,13 @@ import java.util.ArrayList;
 public class AddElementFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private Button element_BTN_add;
-    private String type = "Garden", name, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
+    private String type = "Garden", name, facilityType, muscaleGroup, description, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
     private Boolean active, put = false;
     private Double lat, lng;
     private RadioGroup element_RGP;
-    private EditText element_EDT_name, element_EDT_latitude, element_EDT_longitude;
+    private EditText element_EDT_name, element_EDT_latitude, element_EDT_longitude, element_EDT_description;
+    private Spinner element_SPN_type, element_SPN_muscale;
+    private LinearLayout element_LYT_facility;
     private User user;
     private RequestQueue requestQueue;
     private VolleyHelper volleyHelper;
@@ -78,6 +85,7 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                     element_EDT_name.setText("");
                     element_EDT_latitude.setText("");
                     element_EDT_longitude.setText("");
+                    element_EDT_description.setText("");
                     put = false;
                     element_BTN_add.setClickable(true);
                 } else {
@@ -106,6 +114,7 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                     element_EDT_name.setText("");
                     element_EDT_latitude.setText("");
                     element_EDT_longitude.setText("");
+                    element_EDT_description.setText("");
                     element_BTN_add.setClickable(true);
                 }
             }
@@ -141,6 +150,10 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         element_EDT_name = view.findViewById(R.id.element_EDT_name);
         element_EDT_latitude = view.findViewById(R.id.element_EDT_latitude);
         element_EDT_longitude = view.findViewById(R.id.element_EDT_longitude);
+        element_LYT_facility = view.findViewById(R.id.element_LYT_facility);
+        element_EDT_description = view.findViewById(R.id.element_EDT_description);
+        element_SPN_type = view.findViewById(R.id.element_SPN_type);
+        element_SPN_muscale = view.findViewById(R.id.element_SPN_muscale);
     }
 
     @Override
@@ -169,16 +182,36 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         active = true;
         lat = Double.parseDouble(element_EDT_latitude.getText().toString());
         lng = Double.parseDouble(element_EDT_longitude.getText().toString());
-
         JSONObject jsonBody = new JSONObject();
-        JSONObject locationJson = new JSONObject();
         try {
+            JSONObject locationJson = new JSONObject();
+            JSONObject gardenInfoJson = new JSONObject();
+            JSONObject facilityInfoJson = new JSONObject();
+            JSONObject elementAttributes = new JSONObject();
+            if(type.equals("Garden")) {
+                gardenInfoJson.put("rating", 0.0);
+                gardenInfoJson.put("capacity", 0);
+                gardenInfoJson.put("numOfRatedBy", 0);
+                JSONObject facilityTypes = new JSONObject();
+                gardenInfoJson.put("facilityTypes", facilityTypes);
+                elementAttributes.put("Info", gardenInfoJson);
+            } else {
+                facilityType = element_SPN_type.getSelectedItem().toString();
+                muscaleGroup = element_SPN_muscale.getSelectedItem().toString();
+                description = element_EDT_description.getText().toString();
+                facilityInfoJson.put("type", facilityType);
+                facilityInfoJson.put("mus_group", muscaleGroup);
+                facilityInfoJson.put("description", description);
+                facilityInfoJson.put("status", FacilityStatus.free.toString());
+                elementAttributes.put("Info", facilityInfoJson);
+            }
             locationJson.put("lat", lat);
             locationJson.put("lng", lng);
             jsonBody.put("type", type);
             jsonBody.put("name", name);
             jsonBody.put("active", active);
             jsonBody.put("location", locationJson);
+            jsonBody.put("elementAttributes", elementAttributes);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -194,6 +227,9 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         else if(element_EDT_latitude.getText().toString().trim().isEmpty() || element_EDT_longitude.getText().toString().trim().isEmpty()){
             Toast.makeText(getContext(), "Please enter full location!", Toast.LENGTH_LONG).show();
             return false;
+        } else if(type.equals("Facility") && element_EDT_description.getText().toString().trim().isEmpty()){
+            Toast.makeText(getContext(), "Please enter description!", Toast.LENGTH_LONG).show();
+            return false;
         }
         return true;
     }
@@ -205,10 +241,14 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         switch(index){
             case 0:
                 type = "Garden";
+                element_LYT_facility.setVisibility(View.GONE);
                 break;
 
             case 1:
                 type = "Facility";
+                element_LYT_facility.setVisibility(View.VISIBLE);
+                element_SPN_type.setAdapter(new ArrayAdapter<FacilityType>(this.getContext(), android.R.layout.simple_spinner_item, FacilityType.values()));
+                element_SPN_muscale.setAdapter(new ArrayAdapter<MuscaleGroup>(this.getContext(), android.R.layout.simple_spinner_item, MuscaleGroup.values()));
                 break;
         }
     }
