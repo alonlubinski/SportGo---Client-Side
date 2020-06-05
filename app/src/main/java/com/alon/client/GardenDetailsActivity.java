@@ -16,6 +16,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -44,10 +45,12 @@ import java.util.Locale;
 
 public class GardenDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private LinearLayout garden_LYT_manager;
     private TextView garden_LBL_name, garden_LBL_address, garden_LBL_location, garden_LBL_active, garden_LBL_rating;
-    private String id, name, address = null, location, rating, ratedBy, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
-    private Boolean active;
+    private String id, name, address = null, location, ratedBy, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
+    private Boolean active, sendRating = false, getRating = false;
     private int usersVote;
+    private Double rating;
     private Button garden_BTN_vote;
     private RecyclerView garden_RCV_facilities;
     private RecyclerView.Adapter mAdapter;
@@ -79,9 +82,12 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
             Double lat = Double.parseDouble(locationArr[0]);
             Double lng = Double.parseDouble(locationArr[1]);
             convertToAddress(lat, lng);
-            rating = getIntent().getStringExtra("rating");
+            rating = Double.parseDouble(getIntent().getStringExtra("rating"));
             ratedBy = getIntent().getStringExtra("numOfRatedBy");
             initDetails();
+        }
+        if(user.getUserRole().equals("PLAYER")) {
+            garden_LYT_manager.setVisibility(View.GONE);
         }
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -102,9 +108,21 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void notifySuccessObject(JSONObject response) {
-                garden_PRB.setVisibility(View.GONE);
-                Toast.makeText(GardenDetailsActivity.this, "Thank you for voting!", Toast.LENGTH_LONG).show();
-                rankDialog.dismiss();
+                if(sendRating) {
+                    garden_PRB.setVisibility(View.GONE);
+                    Toast.makeText(GardenDetailsActivity.this, "Thank you for voting!", Toast.LENGTH_LONG).show();
+                    sendRating = false;
+                    getUpdatedRating();
+                } else if (getRating){
+                    try {
+                        rating = response.getJSONObject("info_garden").getDouble("rating");
+                        ratedBy = String.valueOf(response.getJSONObject("info_garden").getInt("numOfRatedBy"));
+                        garden_LBL_rating.setText(String.format("%.1f / 5.0 ", rating) + "(Rated by " + ratedBy + " people)");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getRating = false;
+                }
             }
 
             @Override
@@ -117,6 +135,14 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         };
     }
 
+    private void getUpdatedRating() {
+        String actionUrl = Constants.URL_PREFIX + "/acs/actions";
+        JSONObject jsonBody = new JSONObject();
+        jsonBody = createJsonForSend("get_info_garden");
+        volleyHelper.postObjectDataVolley(requestQueue, actionUrl, jsonBody);
+        getRating = true;
+    }
+
     private void initDetails() {
         garden_LBL_name.setText(name);
         if(address != null) {
@@ -126,11 +152,13 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         }
         garden_LBL_location.setText(location);
         garden_LBL_active.setText(active.toString());
-        garden_LBL_rating.setText(rating + "/5.0 (Rated by " + ratedBy + " people)");
+        garden_LBL_rating.setText(String.format("%.1f / 5.0 ", rating) + "(Rated by " + ratedBy + " people)");
+
     }
 
     // Method that find all the views by id.
     private void findAll() {
+        garden_LYT_manager = findViewById(R.id.garden_LYT_manager);
         garden_BTN_vote = findViewById(R.id.garden_BTN_vote);
         garden_LBL_name = findViewById(R.id.garden_LBL_name);
         garden_LBL_address = findViewById(R.id.garden_LBL_address);
@@ -177,6 +205,10 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
                     element.setLocationUtil(new LocationUtil(
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                    element.getElementAttributes().put("description", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").getString("description"));
+                    element.getElementAttributes().put("type", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("type"));
+                    element.getElementAttributes().put("status", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("status"));
+                    element.getElementAttributes().put("mus_group", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("mus_group"));
                     facilityArrayList.add(element);
                 }
 
@@ -228,6 +260,8 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         JSONObject jsonBody = new JSONObject();
         jsonBody = createJsonForSend("update_rating");
         volleyHelper.postObjectDataVolley(requestQueue, actionUrl, jsonBody);
+        rankDialog.dismiss();
+        sendRating = true;
 
     }
 
@@ -249,7 +283,9 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
             element.put("elementId", elementId);
             jsonBody.put("element", element);
             jsonBody.put("type", type);
-            actionAttributes.put("rating", usersVote);
+            if(type.equals("update_rating")) {
+                actionAttributes.put("rating", usersVote);
+            }
             jsonBody.put("actionAttributes", actionAttributes);
         } catch (JSONException e) {
             e.printStackTrace();

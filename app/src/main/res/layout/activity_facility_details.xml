@@ -7,6 +7,16 @@
     tools:context=".FacilityDetailsActivity"
     android:padding="5dp">
 
+    <ProgressBar
+        android:id="@+id/facility_PRB"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@xml/circular_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,28 +58,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/garden_str"
-            android:textStyle="bold"
-            android:textColor="@color/green"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:id="@+id/facility_LBL_garden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:layout_marginLeft="10dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            android:layout_margin="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/address_str"
             android:textStyle="bold"
             android:textColor="@color/green"
@@ -89,16 +77,67 @@
             android:background="@color/black"
             android:layout_margin="10dp"/>
 
+        <LinearLayout
+            android:id="@+id/facility_LYT_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/facility_LBL_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/active_str"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/facility_LBL_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/location_str"
+            android:text="@string/description_str"
             android:textStyle="bold"
             android:textColor="@color/green"
             android:layout_marginLeft="10dp"/>
 
         <TextView
-            android:id="@+id/facility_LBL_location"
+            android:id="@+id/facility_LBL_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -114,13 +153,57 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/active_str"
+            android:text="@string/type_str"
             android:textStyle="bold"
             android:textColor="@color/green"
             android:layout_marginLeft="10dp"/>
 
         <TextView
-            android:id="@+id/facility_LBL_active"
+            android:id="@+id/facility_LBL_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mus_group_str"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/facility_LBL_mus_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_str"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/facility_LBL_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -130,8 +213,22 @@
 
 
 
+
+
     </LinearLayout>
 
 
-
+    <Button
+        android:id="@+id/facility_BTN_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:elevation="5dp"
+        android:text="@string/change_status_str"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"/>
 </RelativeLayout>

@@ -47,4 +47,17 @@
     <string name="rating_str">Rating</string>
     <string name="vote_str">Vote</string>
     <string name="cancel_str">Cancel</string>
+    <string name="description_str">Description</string>
+    <string name="mus_group_str">Muscle Group</string>
+    <string name="status_str">Status</string>
+    <string name="change_status_str">Change Status</string>
+    <string name="rating_dialog_text">What do you think about this garden?</string>
+    <string name="status_dialog_text">What is the status of this facility?</string>
+    <string name="free_str">Free</string>
+    <string name="broken_str">Broken</string>
+    <string name="occupied_str">Occupied</string>
+    <string name="address_RCV_str">"Address: "</string>
+    <string name="rating_RCV_str">"Rating: "</string>
+    <string name="type_RCV_str">"Type: "</string>
+    <string name="status_RCV_str">"Status: "</string>
 </resources>

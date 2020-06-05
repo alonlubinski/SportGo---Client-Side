@@ -9,28 +9,41 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rating_dialog_text"
+        android:text="@string/status_dialog_text"
         android:textStyle="bold"
         android:textColor="@color/green"
         android:textSize="20sp"/>
 
-    <RatingBar
-        android:id="@+id/rating_RGB"
+    <RadioGroup
+        android:id="@+id/status_RGP"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="1"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:progressTint="@color/gold"
-        android:secondaryProgressTint="@color/black"/>
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/status_RGP_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free_str"/>
+
+        <RadioButton
+            android:id="@+id/status_RGP_occupied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/occupied_str"/>
+
+        <RadioButton
+            android:id="@+id/status_RGP_broken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/broken_str"/>
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/rating_BTN_confirm"
+            android:id="@+id/status_BTN_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,7 +55,7 @@
             android:elevation="5dp"/>
 
         <Button
-            android:id="@+id/rating_BTN_cancel"
+            android:id="@+id/status_BTN_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

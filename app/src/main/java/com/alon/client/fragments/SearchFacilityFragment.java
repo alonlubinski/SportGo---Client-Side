@@ -185,6 +185,10 @@ public class SearchFacilityFragment extends Fragment implements View.OnClickList
                     element.setLocationUtil(new LocationUtil(
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lat"),
                             jsonArray.getJSONObject(i).getJSONObject("location").getDouble("lng")));
+                    element.getElementAttributes().put("description", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").getString("description"));
+                    element.getElementAttributes().put("type", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("type"));
+                    element.getElementAttributes().put("status", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("status"));
+                    element.getElementAttributes().put("mus_group", jsonArray.getJSONObject(i).getJSONObject("elementAttributes").getJSONObject("Info").get("mus_group"));
                     facilityArrayList.add(element);
                 }
 
