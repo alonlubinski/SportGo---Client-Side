@@ -1,4 +1,6 @@
-package com.alon.client.utils;
+package com.alon.client.utils.elementUtils;
+
+import com.alon.client.utils.elementUtils.FacilityType;
 
 import java.util.HashMap;
 import java.util.Map;

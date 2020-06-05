@@ -115,13 +115,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_str"
+                        android:textStyle="bold"
+                        android:textColor="@color/green"
+                        android:textSize="20sp"
+                        android:layout_marginTop="30dp"/>
 
                     <Spinner
                         android:id="@+id/element_SPN_type"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mus_group_str"
+                        android:textStyle="bold"
+                        android:textColor="@color/green"
+                        android:textSize="20sp"
+                        android:layout_marginTop="30dp"/>
 
                     <Spinner
                         android:id="@+id/element_SPN_muscale"

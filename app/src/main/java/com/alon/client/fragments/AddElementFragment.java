@@ -1,6 +1,5 @@
 package com.alon.client.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,14 +15,14 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.alon.client.Constants;
+import com.alon.client.utils.Constants;
 import com.alon.client.R;
-import com.alon.client.utils.Element;
-import com.alon.client.utils.FacilityStatus;
-import com.alon.client.utils.FacilityType;
+import com.alon.client.utils.elementUtils.Element;
+import com.alon.client.utils.elementUtils.FacilityStatus;
+import com.alon.client.utils.elementUtils.FacilityType;
 import com.alon.client.utils.LocationUtil;
-import com.alon.client.utils.MuscaleGroup;
-import com.alon.client.utils.User;
+import com.alon.client.utils.elementUtils.MuscaleGroup;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;

@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.alon.client.utils.Constants;
 import com.alon.client.utils.LocationUtil;
-import com.alon.client.utils.User;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;
@@ -36,8 +38,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText login_EDT_email;
     private Button login_BTN_login, login_BTN_signup;
     private String email, url = Constants.URL_PREFIX + "/acs/users/login";
+    private ProgressBar login_PRB;
     private RequestQueue requestQueue;
-    private TextView login_LBL_data;
     private VolleyHelper volleyHelper;
     private VolleyResultInterface volleyResultInterface;
     private User user;
@@ -63,20 +65,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
+                login_PRB.setVisibility(View.GONE);
                 String errorMessage = volleyHelper.handleErrorMessage(error);
-                login_LBL_data.setText(errorMessage);
+                Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 login_BTN_login.setClickable(true);
             }
 
             @Override
             public void notifySuccessObject(JSONObject response) {
-                login_LBL_data.setText(response.toString());
                 login_BTN_login.setClickable(true);
                 try {
                     user.login(response.getJSONObject("userId").getString("email"), response.getString("username"), response.getString("avatar"), response.getString("role"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                login_PRB.setVisibility(View.GONE);
                 startMainActivity();
             }
 
@@ -98,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_EDT_email = findViewById(R.id.login_EDT_email);
         login_BTN_login = findViewById(R.id.login_BTN_login);
         login_BTN_signup = findViewById(R.id.login_BTN_signup);
-        login_LBL_data = findViewById(R.id.login_LBL_data);
+        login_PRB = findViewById(R.id.login_PRB);
     }
 
     @Override
@@ -106,9 +109,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(view.getId()){
             case R.id.login_BTN_login:
                 login_BTN_login.setClickable(false);
-                email = login_EDT_email.getText().toString();
-                String loginUrl = url + "/" + Constants.DOMAIN + "/" + email;
-                volleyHelper.getObjectDataVolley(requestQueue, loginUrl);
+                if(checkInputValidation()) {
+                    login_PRB.setVisibility(View.VISIBLE);
+                    email = login_EDT_email.getText().toString();
+                    String loginUrl = url + "/" + Constants.DOMAIN + "/" + email;
+                    volleyHelper.getObjectDataVolley(requestQueue, loginUrl);
+                } else {
+                    login_BTN_login.setClickable(true);
+                }
                 break;
 
             case R.id.login_BTN_signup:
@@ -127,6 +135,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void startSignUpActivity(){
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
+    }
+
+    // Method that check if the inputs are not empty.
+    private boolean checkInputValidation(){
+        if(login_EDT_email.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Please enter email!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     // Method that check if users granted location permissions.
@@ -167,5 +184,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        login_EDT_email.setText("");
+    }
 }

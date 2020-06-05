@@ -7,61 +7,74 @@
     tools:context=".LoginActivity"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/loginStr"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:id="@+id/loginStr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_str"
+            android:textSize="80sp"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+
+        <EditText
+            android:id="@+id/login_EDT_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background"
+            android:elevation="5dp"
+            android:hint="@string/email_str"
+            android:padding="15dp"
+            android:inputType="textEmailAddress"/>
+
+        <Button
+            android:id="@+id/login_BTN_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_str"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_background"
+            android:elevation="5dp"/>
+
+        <Button
+            android:id="@+id/login_BTN_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_str"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:elevation="5dp"/>
+
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/login_PRB"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_str"
-        android:textSize="80sp"
-        android:textStyle="bold"
-        android:textColor="@color/green"
+        android:progressDrawable="@xml/circular_progress_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-    <EditText
-        android:id="@+id/login_EDT_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loginStr"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/edit_text_background"
-        android:elevation="5dp"
-        android:hint="@string/email_str"
-        android:padding="15dp" />
-
-    <Button
-        android:id="@+id/login_BTN_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login_str"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_below="@id/login_EDT_email"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_background"
-        android:elevation="5dp"/>
-
-    <Button
-        android:id="@+id/login_BTN_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up_str"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_below="@id/login_BTN_login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_background"
-        android:elevation="5dp"/>
-
-    <TextView
-        android:id="@+id/login_LBL_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Hello World!"
-        android:layout_below="@id/login_BTN_signup"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

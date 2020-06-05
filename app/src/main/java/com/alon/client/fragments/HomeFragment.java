@@ -13,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.alon.client.Constants;
+import com.alon.client.utils.Constants;
 import com.alon.client.GardenDetailsActivity;
 import com.alon.client.R;
-import com.alon.client.utils.Element;
+import com.alon.client.utils.elementUtils.Element;
 import com.alon.client.utils.LocationUtil;
-import com.alon.client.utils.User;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;

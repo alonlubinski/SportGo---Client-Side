@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.alon.client.utils.User;
+
+import com.alon.client.utils.Constants;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;
@@ -21,6 +24,7 @@ import org.json.JSONObject;
 public class UpdateProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText update_EDT_username, update_EDT_avatar;
+    private ProgressBar update_profile_PRB;
     private Button update_BTN_confirm;
     private String username, avatar, url = Constants.URL_PREFIX + "/acs/users/" + Constants.DOMAIN;
     private User user;
@@ -45,7 +49,9 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
+                update_profile_PRB.setVisibility(View.GONE);
                 if(error instanceof ParseError){
+                    Toast.makeText(UpdateProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show();
                     user.setUsername(username);
                     user.setAvatar(avatar);
                     finish();
@@ -58,6 +64,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void notifySuccessObject(JSONObject response) {
+                update_profile_PRB.setVisibility(View.GONE);
+                Toast.makeText(UpdateProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
@@ -78,6 +86,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     private void findAll() {
         update_EDT_username = findViewById(R.id.update_EDT_username);
         update_EDT_avatar = findViewById(R.id.update_EDT_avatar);
+        update_profile_PRB = findViewById(R.id.update_profile_PRB);
         update_BTN_confirm = findViewById(R.id.update_BTN_confirm);
     }
 
@@ -87,6 +96,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.update_BTN_confirm:
                 update_BTN_confirm.setClickable(false);
                 if(checkInputValidation()){
+                    update_profile_PRB.setVisibility(View.VISIBLE);
                     username = update_EDT_username.getText().toString();
                     avatar = update_EDT_avatar.getText().toString();
                     url += "/" + user.getEmail();

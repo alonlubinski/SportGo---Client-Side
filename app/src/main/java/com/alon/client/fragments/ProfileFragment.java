@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.alon.client.R;
 import com.alon.client.UpdateProfileActivity;
-import com.alon.client.utils.User;
+import com.alon.client.utils.Converter;
+import com.alon.client.utils.userUtils.User;
+import com.alon.client.utils.userUtils.UserRole;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -42,7 +44,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profile_LBL_username.setText(user.getUsername());
         profile_LBL_email.setText(user.getEmail());
         profile_LBL_avatar.setText(user.getAvatar());
-        profile_LBL_role.setText(user.getUserRole());
+        profile_LBL_role.setText(Converter.convertUserRole(UserRole.valueOf(user.getUserRole())));
     }
 
     // Method that find all the views by id.

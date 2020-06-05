@@ -1,33 +1,26 @@
 package com.alon.client;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Rating;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alon.client.utils.Element;
-import com.alon.client.utils.FacilityRecyclerViewAdapter;
-import com.alon.client.utils.FacilityStatus;
+import com.alon.client.utils.Constants;
+import com.alon.client.utils.elementUtils.Element;
+import com.alon.client.utils.adapters.FacilityRecyclerViewAdapter;
 import com.alon.client.utils.LocationUtil;
-import com.alon.client.utils.User;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;

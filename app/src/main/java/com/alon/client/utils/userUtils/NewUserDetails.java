@@ -1,4 +1,4 @@
-package com.alon.client.utils;
+package com.alon.client.utils.userUtils;
 
 public class NewUserDetails {
     private UserRole role;

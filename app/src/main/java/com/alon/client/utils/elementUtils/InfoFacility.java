@@ -1,4 +1,4 @@
-package com.alon.client.utils;
+package com.alon.client.utils.elementUtils;
 
 public class InfoFacility {
     private String description;

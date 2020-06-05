@@ -1,4 +1,6 @@
-package com.alon.client.utils;
+package com.alon.client.utils.userUtils;
+
+import com.alon.client.utils.LocationUtil;
 
 public class User {
     private static User instance;

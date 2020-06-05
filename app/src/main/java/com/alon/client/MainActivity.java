@@ -10,20 +10,18 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alon.client.fragments.AddElementFragment;
 import com.alon.client.fragments.HomeFragment;
 import com.alon.client.fragments.ProfileFragment;
 import com.alon.client.fragments.SearchFacilityFragment;
 import com.alon.client.fragments.SearchGardenFragment;
-import com.alon.client.utils.User;
-import com.alon.client.utils.UserRole;
+import com.alon.client.utils.userUtils.User;
+import com.alon.client.utils.userUtils.UserRole;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private TextView menuUsername, menuEmail, menuRole, menuAvatar;
     private User user;
     private View navHeader;
     private DrawerLayout drawerLayout;
@@ -38,10 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findAll();
 
         user = User.getInstance();
-        menuUsername.setText("Welcome " + user.getUsername() + "!");
-        menuEmail.setText(user.getEmail());
-        menuRole.setText(user.getUserRole());
-        menuAvatar.setText(user.getAvatar());
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,12 +45,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(user.getUserRole().equals(UserRole.PLAYER.toString())){
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
+            getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new HomeFragment()).commit();
         } else if(user.getUserRole().equals(UserRole.MANAGER.toString())){
             navigationView.getMenu().getItem(5).setVisible(false);
-        } else {
+            getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new HomeFragment()).commit();
+        } else if(user.getUserRole().equals(UserRole.ADMIN.toString())){
+            navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
+            getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new ProfileFragment()).commit();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.main_FL, new HomeFragment()).commit();
+
+
+
     }
 
     // Find all views by id.
@@ -65,11 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.main_DL);
         navigationView = findViewById(R.id.main_NV);
         navHeader = navigationView.getHeaderView(0);
-        menuUsername = navHeader.findViewById(R.id.menu_username);
-        menuEmail = navHeader.findViewById(R.id.menu_email);
-        menuRole = navHeader.findViewById(R.id.menu_role);
-        menuAvatar = navHeader.findViewById(R.id.menu_avatar);
-
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

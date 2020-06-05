@@ -1,4 +1,4 @@
-package com.alon.client.utils;
+package com.alon.client.utils.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alon.client.FacilityDetailsActivity;
 import com.alon.client.R;
+import com.alon.client.utils.Converter;
+import com.alon.client.utils.elementUtils.Element;
+import com.alon.client.utils.elementUtils.FacilityStatus;
+import com.alon.client.utils.elementUtils.FacilityType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,8 +100,8 @@ public class FacilityRecyclerViewAdapter extends RecyclerView.Adapter<FacilityRe
         } else {
             holder.facility_LBL_address.setText("Address not available");
         }
-        holder.facility_LBL_type.setText(mDataset.get(position).getElementAttributes().get("type").toString());
-        holder.facility_LBL_status.setText(mDataset.get(position).getElementAttributes().get("status").toString());
+        holder.facility_LBL_type.setText(Converter.convertFacilityType(FacilityType.valueOf(mDataset.get(position).getElementAttributes().get("type").toString())));
+        holder.facility_LBL_status.setText(Converter.convertFacilityStatus(FacilityStatus.valueOf(mDataset.get(position).getElementAttributes().get("status").toString())));
         holder.facility = mDataset.get(position);
     }
 

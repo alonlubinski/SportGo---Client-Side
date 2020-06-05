@@ -42,6 +42,16 @@
             android:layout_marginTop="30dp"/>
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/update_profile_PRB"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@xml/circular_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
     <Button
         android:id="@+id/update_BTN_confirm"
         android:layout_width="wrap_content"

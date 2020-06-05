@@ -11,14 +11,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alon.client.utils.FacilityStatus;
-import com.alon.client.utils.FacilityType;
-import com.alon.client.utils.MuscaleGroup;
-import com.alon.client.utils.User;
+import com.alon.client.utils.Constants;
+import com.alon.client.utils.Converter;
+import com.alon.client.utils.elementUtils.FacilityStatus;
+import com.alon.client.utils.elementUtils.FacilityType;
+import com.alon.client.utils.elementUtils.MuscaleGroup;
+import com.alon.client.utils.userUtils.User;
 import com.alon.client.volley.VolleyHelper;
 import com.alon.client.volley.VolleyResultInterface;
 import com.alon.client.volley.VolleySingleton;
@@ -39,7 +40,7 @@ public class FacilityDetailsActivity extends AppCompatActivity implements View.O
     private LinearLayout facility_LYT_manager;
     private TextView facility_LBL_name, facility_LBL_address, facility_LBL_location, facility_LBL_active,
                         facility_LBL_description, facility_LBL_type, facility_LBL_mus_group, facility_LBL_status;
-    private String id, name, address = null, location, description, userStatus, facilityStatusStr;
+    private String id, name, address = null, location, description, userStatus = "free", facilityStatusStr;
     private FacilityStatus facilityStatus;
     private FacilityType facilityType;
     private MuscaleGroup muscaleGroup;
@@ -107,7 +108,7 @@ public class FacilityDetailsActivity extends AppCompatActivity implements View.O
                 } else if(getStatus){
                     try {
                         facilityStatusStr = response.getJSONObject("info_facility").getString("status");
-                        facility_LBL_status.setText(FacilityStatus.valueOf(facilityStatusStr).toString());
+                        facility_LBL_status.setText(Converter.convertFacilityStatus(FacilityStatus.valueOf(facilityStatusStr)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -142,9 +143,9 @@ public class FacilityDetailsActivity extends AppCompatActivity implements View.O
         facility_LBL_location.setText(location);
         facility_LBL_active.setText(active.toString());
         facility_LBL_description.setText(description);
-        facility_LBL_type.setText(facilityType.toString());
-        facility_LBL_mus_group.setText(muscaleGroup.toString());
-        facility_LBL_status.setText(facilityStatus.toString());
+        facility_LBL_type.setText(Converter.convertFacilityType(facilityType));
+        facility_LBL_mus_group.setText(Converter.convertMuscaleGroup(muscaleGroup));
+        facility_LBL_status.setText(Converter.convertFacilityStatus(facilityStatus));
     }
 
     // Method that find all the views by id.
@@ -190,7 +191,6 @@ public class FacilityDetailsActivity extends AppCompatActivity implements View.O
         dialog.setContentView(R.layout.status_dialog);
         dialog.setCancelable(true);
         final RadioGroup status_RGP = dialog.findViewById(R.id.status_RGP);
-        status_RGP.check(FacilityStatus.valueOf(facilityStatus.toString()).ordinal());
         status_RGP.setOnCheckedChangeListener(this);
 
         Button status_BTN_confirm,  status_BTN_cancel;
