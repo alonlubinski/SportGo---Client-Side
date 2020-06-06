@@ -29,6 +29,7 @@ import com.alon.client.volley.VolleySingleton;
 import com.android.volley.ParseError;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,7 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
 
     private Button element_BTN_add;
     private String type = "Garden", name, facilityType, muscaleGroup, description, url = Constants.URL_PREFIX + "/acs/elements/" + Constants.DOMAIN;
-    private Boolean active, put = false;
+    private Boolean active, put = false, updateParent = false;
     private Double lat, lng;
     private RadioGroup element_RGP;
     private EditText element_EDT_name, element_EDT_latitude, element_EDT_longitude, element_EDT_description;
@@ -79,7 +80,8 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
         volleyResultInterface = new VolleyResultInterface() {
             @Override
             public void notifyError(VolleyError error) {
-                if(error instanceof ParseError){
+                if(error instanceof ParseError && put){
+                    //updateParent();
                     Toast.makeText(getContext(), "Element add to db!", Toast.LENGTH_LONG).show();
                     element_EDT_name.setText("");
                     element_EDT_latitude.setText("");
@@ -87,6 +89,8 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
                     element_EDT_description.setText("");
                     put = false;
                     element_BTN_add.setClickable(true);
+                } else if(error instanceof ParseError && updateParent){
+                    updateParent = false;
                 } else {
                     String errorMessage = volleyHelper.handleErrorMessage(error);
                     Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
@@ -140,6 +144,32 @@ public class AddElementFragment extends Fragment implements View.OnClickListener
 
             }
         };
+    }
+
+    private void updateParent() {
+        updateParent = true;
+        String newUrl = Constants.URL_PREFIX + "/acs/elements/"+ Constants.DOMAIN + "/" + user.getEmail() + "/" + Constants.DOMAIN + "/" + parent.getId();
+        JSONObject jsonBody = new JSONObject();
+        JSONObject elementAttributes = new JSONObject();
+        JSONObject gardenInfo = new JSONObject();
+        JSONObject facilityTypes = new JSONObject();
+        JSONObject type = new JSONObject();
+        try {
+            gardenInfo.put("rating", parent.getElementAttributes().get("rating"));
+            gardenInfo.put("capacity", parent.getElementAttributes().get("capacity"));
+            gardenInfo.put("numOfRatedBy", parent.getElementAttributes().get("numOfRatedBy"));
+            type.put("type", facilityType);
+            facilityTypes.put("type", type);
+            gardenInfo.put("facilityTypes", facilityTypes);
+
+
+            elementAttributes.put("Info", gardenInfo);
+            jsonBody.put("elementAttributes", elementAttributes);
+            System.out.println(jsonBody + "================================================");
+            volleyHelper.putObjectDataVolley(requestQueue, newUrl, jsonBody);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method that find all the views by id.

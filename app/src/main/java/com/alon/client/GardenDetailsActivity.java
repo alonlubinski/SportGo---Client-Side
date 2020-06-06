@@ -86,8 +86,10 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         initVolleyInterface();
         volleyHelper = new VolleyHelper(volleyResultInterface);
+        getUpdatedRating();
         url += "/" + user.getEmail() + "/" + Constants.DOMAIN + "/" + id + "/children";
         volleyHelper.getArrayDataVolley(requestQueue, url);
+
     }
 
     private void initVolleyInterface() {
@@ -145,8 +147,6 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
         }
         garden_LBL_location.setText(location);
         garden_LBL_active.setText(active.toString());
-        garden_LBL_rating.setText(String.format("%.1f / 5.0 ", rating) + "(Rated by " + ratedBy + " people)");
-
     }
 
     // Method that find all the views by id.

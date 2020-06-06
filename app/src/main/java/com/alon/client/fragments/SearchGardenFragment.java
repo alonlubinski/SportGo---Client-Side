@@ -125,9 +125,9 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
                     if(type.equals("byName")){
                         newUrl = url + "/" + user.getEmail() +"/search/byName/" + value;
                     } else {
-                        distance = Double.parseDouble(value);
+                        distance = convertDistance(user.getLocationUtil().getLat(), Double.parseDouble(value));
                         newUrl = url + "/" + user.getEmail() + "/search/near/" +
-                                 user.getLocationUtil().getLat() + "/" + user.getLocationUtil().getLng() + "/" + distance;
+                                 user.getLocationUtil().getLat() + "/" + user.getLocationUtil().getLng() + "/" + distance + "?size=20";
                     }
                     volleyHelper.getArrayDataVolley(requestQueue, newUrl);
                 } else {
@@ -198,5 +198,14 @@ public class SearchGardenFragment extends Fragment implements View.OnClickListen
             }
 
         }
+    }
+
+    // Method that convert the value in km to coordinate value.
+    public double convertDistance(double lat, double value){
+        double earthRadius = 6378.137;
+        double pi = Math.PI;
+        double oneKMeter = (1/((2*pi/360)*earthRadius));
+
+        return value * oneKMeter;
     }
 }

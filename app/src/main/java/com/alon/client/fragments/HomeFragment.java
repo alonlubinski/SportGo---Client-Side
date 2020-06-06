@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         requestQueue = VolleySingleton.getInstance(getContext()).getRequestQueue();
         initVolleyInterface();
         volleyHelper = new VolleyHelper(volleyResultInterface);
-        url += "/" + user.getEmail() + "/search/byType/Garden";
+        url += "/" + user.getEmail() + "/search/byType/Garden?size=20";
     }
 
     @Nullable
@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 13));
+                new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 14));
         map.setMyLocationEnabled(true);
         volleyHelper.getArrayDataVolley(requestQueue, url);
         map.setOnInfoWindowClickListener(this);
