@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     getLocation();
                 } else {
-                    checkLocationPermissions();
+                    user.setLocationUtil(new LocationUtil(0, 0));
                 }
                 return;
         }

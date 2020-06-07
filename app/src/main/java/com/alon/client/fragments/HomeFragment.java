@@ -101,9 +101,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 14));
-        map.setMyLocationEnabled(true);
+        if(user.getLocationUtil().getLng() != 0 && user.getLocationUtil().getLat() != 0) {
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 14));
+        } else {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(user.getLocationUtil().getLat(), user.getLocationUtil().getLng()), 0));
+        }
         volleyHelper.getArrayDataVolley(requestQueue, url);
         map.setOnInfoWindowClickListener(this);
     }
