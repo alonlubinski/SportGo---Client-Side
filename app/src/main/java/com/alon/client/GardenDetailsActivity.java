@@ -79,14 +79,15 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
             ratedBy = getIntent().getStringExtra("numOfRatedBy");
             initDetails();
         }
-        if(user.getUserRole().equals("PLAYER")) {
-            garden_LYT_manager.setVisibility(View.GONE);
-        }
+
 
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         initVolleyInterface();
         volleyHelper = new VolleyHelper(volleyResultInterface);
-        getUpdatedRating();
+        if(user.getUserRole().equals("PLAYER")) {
+            garden_LYT_manager.setVisibility(View.GONE);
+            getUpdatedRating();
+        }
         url += "/" + user.getEmail() + "/" + Constants.DOMAIN + "/" + id + "/children";
         volleyHelper.getArrayDataVolley(requestQueue, url);
 
@@ -144,6 +145,9 @@ public class GardenDetailsActivity extends AppCompatActivity implements View.OnC
             garden_LBL_address.setText(address);
         } else {
             garden_LBL_address.setText("Address not available");
+        }
+        if(!user.getUserRole().equals("PLAYER")){
+            garden_LBL_rating.setText(String.format("%.1f / 5.0 ", rating) + "(Rated by " + ratedBy + " people)");
         }
         garden_LBL_location.setText(location);
         garden_LBL_active.setText(active.toString());
